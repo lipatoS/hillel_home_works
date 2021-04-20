@@ -101,20 +101,15 @@ print(set1)
 # Используя Все полученние знания по всем типам данних виполнить рефакторинг кода задачи с сложним списком из лекции 6
 # Код уменьшить до минимального количества строк
 
+
 list_ = [[1, None, 2, 3, 4 + 5j, 6], [1.0, 2.5, None, 3, 9, 4.0 + 5.2j, 6.1], ['1', '2', '3.6', None, '4+5.7j', '6']]
 print(f"Список до изменений: {list_}")
 for elem in list_:
-    types = []
-    dict_ = {}
-    type_max = ""
     for sym in elem:
-        sym_type = type(sym)
-        types.append(sym_type.__name__)
+        types = [(type(sym)).__name__ for sym in elem if (type(sym)).__name__]
         dict_ = {i: types.count(i) for i in types}
-    for key, val in dict_.items():
-        if val == max(dict_.values()):
-            type_max = key
-        [elem.remove(sym) for sym in elem if type(sym).__name__ != type_max]
+        type_max = [key for key, val in dict_.items() if val == max(dict_.values())]
+        [elem.remove(sym) for sym in elem if type(sym).__name__ != type_max[0]]
 print(f"Удаляем мусор: {list_}")
 list_new = []
 [list_new.extend(list_[j]) for j in range(0, len(list_))]
